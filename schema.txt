@@ -1,0 +1,73 @@
+SCA Schema
+
+<toolname>-timestamp
+	Required
+	Description: Timestamp that the tool was run
+	Format: string (output of `date +%s`)
+	Multivalued: no
+	Example:
+		aludo-timestamp: 1651551063
+<toolname>-version
+	Required
+	Description: Version of the tool
+	Format: string
+	Multivalued: no
+	Example:
+		sca-l0-version: 0.0.9+20220426.d067b2e
+supportconfig
+	Required
+	Description: Filename (without path) of supportconfig
+	Multivalued: no
+	Example:
+		supportconfig: scc_sut65-2_201029_0044.txz
+supportconfig-date
+	Required
+	Description: Date of supportconfig
+	Multivalued: no
+	Example:
+		supportconfig-date: Thu Oct 29 00:44:08 EDT 2020
+<category>
+	Required for each category listed in <toolname>-default-checks
+	Description: Category name as listed in <toolname>-default-checks
+	Format: [string|NA|oops] (NA if category check is not run, oops if required info not available)
+	Multivalued: yes, space delimited
+	Examples:
+		btrfs: 1
+		systemctl: NA
+		error-cmds: kernel sshd
+		bugs: 1801625 1901124
+<category>-<subcategory>
+	Optional, only allowed if <category> != NA
+	Description: Any subcategory info provided by the category check.
+	Format: [string|NA|oops] (NA if subcategory check is not run, oops if required info not available)
+	Multivalued: yes, space-delimited
+	Examples:
+		btrfs-snapper: 1
+<category>-<subcategory>-<value>
+	Optional, only allowed if <category> != NA
+	Description: Subcategory info that applies to a specific value.
+	Format: [string|oops] (oops if required/sufficient info cannot be found/retrieved)
+	Multivalued: yes, space-delimited
+	Examples:
+		error-cmds-pkgs-kernel: kernel-default-5.3.18-24.29
+		error-cmds-pkgs-sshd: oops
+		bugs-score-1801625: .90
+<category>-<subcategory>-result
+	Optional, only allowed if <category>-<subcategory> != NA
+	Description: Overall result of a subcategory check
+	Format: [1|0|-1|oops]
+		                1 indicates good ("thumbs-up")
+                -1 indicates bad ("thumbs-down")
+                0 indicates not sure ("thumb-sideways")
+                oops indicates that the module was run but was unable to access required information
+<category>-result
+	Required if <category> != NA
+	Description: Overall result of category check
+	Format: [1|0|-1|oops]	
+		1 indicates good ("thumbs-up")
+		-1 indicates bad ("thumbs-down")
+		0 indicates not sure ("thumb-sideways")
+		oops indicates that the module was run but was unable to access required information
+	Example:
+		btrfs-result: -1
+		error-cmds-result: oops
