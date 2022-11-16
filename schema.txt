@@ -14,14 +14,30 @@ SCA Schema
 	Multivalued: no
 	Example:
 		sca-l0-version: 0.0.9+20220426.d067b2e
+<toolname>-p[1|2|3]-categories: 
+	Optional
+	Description: List of categories to be used for priority 1 actions
+	Format: string
+	Multivalued: yes, space-delimited 
+	Examples:
+		aludo-p1-categories: btrfs
+		sca-p2-categories: kernel kmods
+<toolname>-p[1|2|3]-actions:
+	Optional
+	Description: List of actions to take depending on category result values
+	Format: [forward|notify]:<category-result1>,<category-result2>,...
+	Multivalued: yes, space-delimited
+	Examples:
+		aludo-p1-actions: forward:-1,0
+		sca-p1-actions: forward:-1,0 notify:-1
 supportconfig
-	Required
+	Optional
 	Description: Filename (without path) of supportconfig
 	Multivalued: no
 	Example:
 		supportconfig: scc_sut65-2_201029_0044.txz
 supportconfig-date
-	Required
+	Optional
 	Description: Date of supportconfig
 	Multivalued: no
 	Example:
